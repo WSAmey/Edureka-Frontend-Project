@@ -6,36 +6,41 @@ import React,{useEffect, useState} from 'react'
 // import card5img from './Assets/card5img.jpg'
 // import card6img from './Assets/card6img.jpg'
 
-import mealData from './mealtype.json'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const QuickSearches = () => {
     const [meal,setMeal]=useState([]);
-    
-    const getMeal=()=>{
-        try {
-            setMeal(mealData)
-        } catch (error) {
-            console.log("error: ",error);
-        }
+    const navigate=useNavigate();
+    const getMeal=async()=>{
+        await axios.get("http://localhost:5000/getAllMealTypes")
+        .then(result => setMeal(result.data))
+        .catch(error => console.log(error));
+        console.log(meal);
     }
+
     useEffect(()=>{
         getMeal();
     },[])
+
     console.log(meal);
     return (
-    <div style={{background:"white",margin:'0'}}>
-        <div class="container w-90 " style={{marginTop:"5vh"}}>
+        
+    <div style={{background:"whitesmoke",marginBottom:"10vh"}}>
+        <div class="" style={{marginTop:"2vh",width:"82%",marginLeft:"auto",marginRight:"auto"}}>
         <p class="h4" style={{color: 'darkblue'}}>Quick Searches</p>
         <p style={{color: 'gray'}}>Discover restaurants by type of meal</p>
 
-        <div style={{display:"grid",gridTemplateColumns:"auto auto auto",columnGap:"2vw",rowGap:"2vh"}}>
+        <div style={{display:"grid",gridTemplateColumns:"auto auto auto",columnGap:"2vw",rowGap:"3vh"}}>
 
             
         {meal && meal.map((val) => (
-        <div key={val.id} style={{boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',display:"grid",gridTemplateColumns:"auto auto"}}>
+        <div key={val.id} style={{boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',display:"grid",gridTemplateColumns:"auto auto",cursor:"pointer",height:"15vh",width:"25vw"}} onClick={()=>navigate(`/filterData/${val.meal_type}/${val.name}`)}
+        
+        >
             <div>
-                <img src={require(`${val.image}`)} style={{width: "7vw", height: "15vh", borderRadius: "0", padding: "0"}} alt={val.name} />
+                <img src={val.image} style={{width: "7vw", height: "15vh", borderRadius: "0", padding: "0"}} alt={val.name} />
             </div>
             <div style={{marginLeft:"2px", textAlign: "justify",width:"14vw"}}>
                 <p className="h5 mt-3 mb-0" style={{color: 'darkblue'}}>{val.name}</p>

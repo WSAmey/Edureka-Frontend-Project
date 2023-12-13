@@ -19,6 +19,8 @@ import FilterData from './components/Day 83 DIY/FilterData';
 import Header from './components/Day 84 DIY/Header';
 import QuickSearches from './components/Day 82 DIY/QuickSearches';
 import Details from './components/Day 82 DIY/Details';
+import Success from './components/Day 82 DIY/Success';
+import Cancel from './components/Day 82 DIY/Cancel';
 // import Parent from './components/Day 73 DIY/Parent';
 // import Counter from './components/Day 71 DIY/Counter';
 // import Userdata from './components/Day 71 DIY/Userdata';
@@ -116,13 +118,10 @@ function App() {
       <Router>
         <Routes>
           <Route path='/'  element={<HomePage/>}/>
-          <Route path='/filterData' element={<FilterData/>}/>
+          <Route path='/filterData/:id/:name' element={<FilterData/>}/>
           <Route path='/details' element={<Details/>}/>
-
-
-
-
-
+          <Route path='/success' element={<Success/>}/>
+          <Route path='/cancel' element={<Cancel/>}/>
         </Routes>
       </Router>
       
